@@ -34,6 +34,7 @@ app.use(express.json(), (req, res, next) => {
 });
 app.use(helmet()); //-- Set Security HTTP headers
 app.use(cors());
+app.set("trust proxy", 1);
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   limit: 100, // Limit each IP to 100 requests per `window`
