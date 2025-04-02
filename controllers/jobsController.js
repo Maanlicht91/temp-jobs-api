@@ -26,7 +26,7 @@ exports.getJob = catchAsync(async (req, res, next) => {
 
   //-- Method 2 -security (restrict jobs to their owners)
   const job = await Job.findById(req.params.id);
-  if (job.createdBy.toString() !== req.user) {
+  if (job.createdBy.toString() !== req.user.id) {
     return next(new UnauthenticatedError("Not allowed to view this job"));
   }
   if (!job) {
