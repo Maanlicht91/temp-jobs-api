@@ -58,7 +58,7 @@ exports.updateJob = catchAsync(async (req, res, next) => {
   const job = await Job.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
-  if (job.createdBy.toString() !== req.user) {
+  if (job.createdBy.toString() !== req.user.id) {
     return next(new UnauthenticatedError("Not allowed to update this job!"));
   }
   res.status(StatusCodes.OK).json({
@@ -72,7 +72,7 @@ exports.deleteJob = catchAsync(async (req, res, next) => {
   if (!job) {
     return next(new NotFoundError("There is no matched job!"));
   }
-  if (job.createdBy.toString() !== req.user) {
+  if (job.createdBy.toString() !== req.user.id) {
     return next(new UnauthenticatedError("Not allowed to delete this job!"));
   }
   res.status(StatusCodes.OK).json({
